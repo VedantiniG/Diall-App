@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "527146723246",
+    "firebase_url": "https://diall-app-ce076-default-rtdb.firebaseio.com",
+    "project_id": "diall-app-ce076",
+    "storage_bucket": "diall-app-ce076.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:527146723246:android:711246d916b007492b8a3f",
+        "android_client_info": {
+          "package_name": "com.diall.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "527146723246-n4h90mtk3ilht1dncov1d5mmaloh4kt1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRcNpI7YtNq115_3KOjDrq4-7Mba8U6lo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "527146723246-5kvidvsgoa27s4rh1h5ufq15j0mtntb9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "527146723246-290rul30bpsou622doueb2reumke01l3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.diall.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
