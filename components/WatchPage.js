@@ -1,17 +1,16 @@
 import * as React from 'react';
 import {
-  View,
   StyleSheet,
-  Text,
   useWindowDimensions,
-  SafeAreaView,
-  ScrollView,
-  Dimensions
+  SafeAreaView
 } from 'react-native';
 import { Video } from 'expo-av';
 import { firebase } from '../Firebase/firebase';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { PanGestureHandler } from 'react-native-gesture-handler';
+import { 
+  GestureHandlerRootView,
+  PanGestureHandler, 
+  TapGestureHandler 
+} from 'react-native-gesture-handler';
 import Animated, {
   useAnimatedGestureHandler,
   useAnimatedStyle,
@@ -19,8 +18,9 @@ import Animated, {
   withTiming,
   Easing
 } from 'react-native-reanimated';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const WatchPage = () => {
+const WatchPage = ({navigation}) => {
 
   const video = React.useRef(null);
   const [users, setUsers] = React.useState([]);
@@ -36,6 +36,41 @@ const WatchPage = () => {
   const animatedStyleContainer = useAnimatedStyle(() => ({
     transform: [{ translateY: withTiming(y.value, { duration: 100, easing: Easing.linear }) }],
   }))
+
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      console.log('Focus');
+      if (this.video) {
+        this.video.playAsync();
+      }
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('blur', () => {
+      console.log('Blur');
+      if (this.video) {
+        this.video.pauseAsync();
+      }
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
+  const [isPlaying, setIsPlaying] = React.useState(false);
+
+  const handlePlaying = () => {
+    if (this.video) {
+      if (isPlaying) {
+        this.video.pauseAsync();
+      } else {
+        this.video.playAsync();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  }
 
   React.useEffect(() => {
     videosRef
@@ -67,7 +102,7 @@ const WatchPage = () => {
       y.value = event.translationY;
     },
     onEnd: () => {
-      if (y.value > 0) {
+      if (y.value > 50) {
         y.value = withTiming(0, { easing: Easing.linear });
       } else {
         y.value = withTiming(-height, { easing: Easing.linear });
@@ -75,41 +110,41 @@ const WatchPage = () => {
     }
   })
 
-
-
   return (
     <SafeAreaView style={styles.container2}>
 
     <GestureHandlerRootView style={styles.container}>
       <PanGestureHandler onGestureEvent={swipeVideo}>
-        <Animated.View
-          style={{
+        <Animated.View           style={{
             position: "absolute",
             width: "100%",
             height: "100%",
             //backgroundColor: "red",
             bottom: 0,
             left: 0,
-          }}
-        >
+          }}>
+          <TapGestureHandler onHandlerStateChange={handlePlaying}>
           <Animated.View style={animatedStyleContainer}>
+          {/* {isPlaying ? null : (
+              <Animated.View style={{justifyContent:"center", alignItems:"center", backgroundColor:"black"}}>
+                <MaterialCommunityIcons name="pause" color="black" size={30} />
+              </Animated.View>
+            )} */}
             <Video
               //data = {users}
-              ref={video}
+              ref={ref => { this.video = ref }}
               style={styles.video}
               source={{
-                uri: 'https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'
-                            }}
-              useNativeControls
+                uri: 'https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'}}
+              useNativeControls={false}
               resizeMode="cover"
               isLooping
               shouldPlay={true}
             />
-            
           </Animated.View>
+        </TapGestureHandler>
         </Animated.View>
       </PanGestureHandler>
-      
     </GestureHandlerRootView>
     </SafeAreaView>
   )
@@ -124,6 +159,7 @@ const styles = StyleSheet.create({
   },
   container2: {
     flex: 1,
+    backgroundColor:'black'
   },
   video: {
     alignSelf: 'center',
