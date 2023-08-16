@@ -1,5 +1,4 @@
 import * as firebase from 'firebase/compat';
-//import { initializeApp } from "firebase/compat/app";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBtWpIdMfu61PHOEk19tooWu-uISuDhXHM",
@@ -12,6 +11,7 @@ const firebaseConfig = {
     measurementId: "G-0HG1K5TJ6P"
 }
 
+//initialize database connection
 if(!firebase.apps.length){
     firebase.initializeApp(firebaseConfig);
 }

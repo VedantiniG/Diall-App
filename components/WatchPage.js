@@ -37,6 +37,7 @@ const WatchPage = () => {
     }
   );
 
+  //function to get data from database
   React.useEffect(async() => {
     await videosRef
       .onSnapshot(
@@ -56,6 +57,7 @@ const WatchPage = () => {
   },[])
 
   VideoItem = ({ item, index }) => {
+    //function to play and pause videos on tap
     const onPlayPausePress = () => {
       if (index === currentVid) {
         setCurrentVid(-1);
@@ -66,6 +68,7 @@ const WatchPage = () => {
     return (
       <View>
       <TouchableHighlight onPress={onPlayPausePress}>
+        {/*video component that takes in all the data and renders the video */}
       <Video
         ref={vidRef}
         source={{ uri: item.url }}
@@ -84,6 +87,7 @@ const WatchPage = () => {
     )
   }
 
+  //function to render each video on the screen
   const VideoList = ({ data }) => {
     const renderVids = ({ item, index }) => {
       return (
@@ -92,6 +96,7 @@ const WatchPage = () => {
     };
 
     return (
+      //Flatlist object to display videos one after the other
       <FlatList
         data={data}
         renderItem={renderVids}

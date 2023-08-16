@@ -31,11 +31,6 @@ const ProfilePage = ({navigation}) => {
   
     const [isPlaying, setIsPlaying] = React.useState(true);
   
-    const videos = [
-      'https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4',
-      'https://storage.googleapis.com/my-diall-app-videos/testVideo.mp4'
-    ]
-  
     const animatedStyleContainer = useAnimatedStyle(() => ({
       transform: [{ translateY: withTiming(y.value, { duration: 100, easing: Easing.linear }) }],
     }))

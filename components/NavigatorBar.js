@@ -7,6 +7,7 @@ import AskPage from './AskPage';
 
 const Bar = createMaterialBottomTabNavigator();
 
+//creating the botton navigation bar
 const NavigatorBar = () => {
     return (
         <Bar.Navigator
